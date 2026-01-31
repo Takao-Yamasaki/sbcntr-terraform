@@ -11,6 +11,18 @@ resource "aws_vpc" "main" {
 }
 
 ###############################
+# IGW
+###############################
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway
+resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "sbcntr-main"
+  }
+}
+
+###############################
 # サブネット(Ingress用)
 ###############################
 resource "aws_subnet" "sbcntr-public-ingress-a" {
@@ -32,6 +44,22 @@ resource "aws_subnet" "sbcntr-public-ingress-c" {
 }
 
 ###############################
+# ルートテーブル(Ingress用)
+###############################
+resource "aws_route_table" "sbcntr-ingress" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "sbcntr-ingress"
+  }
+}
+
+resource "aws_route_table_association" "sbcntr-ingress" {
+  subnet_id      = aws_subnet.sbcntr-public-ingress-a.id
+  route_table_id = aws_route_table.sbcntr-ingress.id
+}
+
+###############################
 # サブネット(アプリケーション用)
 ###############################
 resource "aws_subnet" "sbcntr-private-app-a" {
@@ -50,6 +78,22 @@ resource "aws_subnet" "sbcntr-private-app-c" {
   tags = {
     Name = "sbcntr-private-app-c"
   }
+}
+
+###############################
+# ルートテーブル(アプリケーション用)
+###############################
+resource "aws_route_table" "sbcntr-app" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "sbcntr-app"
+  }
+}
+
+resource "aws_route_table_association" "sbcntr-app" {
+  subnet_id      = aws_subnet.sbcntr-private-app-a.id
+  route_table_id = aws_route_table.sbcntr-app.id
 }
 
 ###############################
@@ -98,7 +142,7 @@ resource "aws_subnet" "sbcntr-public-management-c" {
 }
 
 ###############################
-# Egress用
+# サブネット(Egress用)
 ###############################
 resource "aws_subnet" "sbcntr-private-egress-a" {
   vpc_id     = aws_vpc.main.id
