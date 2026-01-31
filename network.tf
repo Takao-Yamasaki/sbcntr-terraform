@@ -4,7 +4,9 @@
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc
 resource "aws_vpc" "main" {
   cidr_block       = "10.0.0.0/16"
-  
+  enable_dns_hostnames = true
+  enable_dns_support = true
+
   tags = {
     Name = "sbcntr-main"
   }
@@ -56,11 +58,25 @@ resource "aws_route_table" "sbcntr-ingress" {
   }
 }
 
+# Ingressサブネットへルート紐付け
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association
-resource "aws_route_table_association" "sbcntr-ingress" {
+resource "aws_route_table_association" "sbcntr-ingress-a" {
   subnet_id      = aws_subnet.sbcntr-public-ingress-a.id
   route_table_id = aws_route_table.sbcntr-ingress.id
 }
+
+## Ingressサブネットへルート紐付け
+resource "aws_route_table_association" "sbcntr-ingress-c" {
+  subnet_id      = aws_subnet.sbcntr-public-ingress-c.id
+  route_table_id = aws_route_table.sbcntr-ingress.id
+}
+
+## Ingressルートテーブルのデフォルトルート
+resource "aws_route_table_association" "sbcntr-ingress-default" {
+  gateway_id = aws_internet_gateway.main.id
+  route_table_id = aws_route_table.sbcntr-ingress.id
+}
+
 
 ###############################
 # サブネット(アプリケーション用)
