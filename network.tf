@@ -54,6 +54,7 @@ resource "aws_route_table" "sbcntr-ingress" {
   }
 }
 
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association
 resource "aws_route_table_association" "sbcntr-ingress" {
   subnet_id      = aws_subnet.sbcntr-public-ingress-a.id
   route_table_id = aws_route_table.sbcntr-ingress.id
