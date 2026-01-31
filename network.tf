@@ -28,6 +28,7 @@ resource "aws_internet_gateway" "main" {
 resource "aws_subnet" "sbcntr-public-ingress-a" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.0.0/24"
+  availability_zone = "ap-northeast-1a"
 
   tags = {
     Name = "sbcntr-public-ingress-a"
@@ -37,6 +38,7 @@ resource "aws_subnet" "sbcntr-public-ingress-a" {
 resource "aws_subnet" "sbcntr-public-ingress-c" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.1.0/24"
+  availability_zone = "ap-northeast-1c"
 
   tags = {
     Name = "sbcntr-public-ingress-c"
@@ -66,6 +68,7 @@ resource "aws_route_table_association" "sbcntr-ingress" {
 resource "aws_subnet" "sbcntr-private-app-a" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.8.0/24"
+  availability_zone = "ap-northeast-1a"
 
   tags = {
     Name = "sbcntr-private-app-a"
@@ -75,6 +78,7 @@ resource "aws_subnet" "sbcntr-private-app-a" {
 resource "aws_subnet" "sbcntr-private-app-c" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.9.0/24"
+  availability_zone = "ap-northeast-1c"
 
   tags = {
     Name = "sbcntr-private-app-c"
@@ -103,6 +107,7 @@ resource "aws_route_table_association" "sbcntr-app" {
 resource "aws_subnet" "sbcntr-private-db-a" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.16.0/24"
+  availability_zone = "ap-northeast-1a"
 
   tags = {
     Name = "sbcntr-private-db-a"
@@ -112,6 +117,7 @@ resource "aws_subnet" "sbcntr-private-db-a" {
 resource "aws_subnet" "sbcntr-private-db-c" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.17.0/24"
+  availability_zone = "ap-northeast-1c"
 
   tags = {
     Name = "sbcntr-private-db-c"
@@ -124,6 +130,7 @@ resource "aws_subnet" "sbcntr-private-db-c" {
 resource "aws_subnet" "sbcntr-public-management-a" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.240.0/24"
+  availability_zone = "ap-northeast-1a"
 
   tags = {
     Name = "sbcntr-public-management-a"
@@ -136,6 +143,7 @@ resource "aws_subnet" "sbcntr-public-management-a" {
 resource "aws_subnet" "sbcntr-public-management-c" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.241.0/24"
+  availability_zone = "ap-northeast-1c"
 
   tags = {
     Name = "sbcntr-public-management-c"
@@ -148,6 +156,7 @@ resource "aws_subnet" "sbcntr-public-management-c" {
 resource "aws_subnet" "sbcntr-private-egress-a" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.248.0/24"
+  availability_zone = "ap-northeast-1a"
 
   tags = {
     Name = "sbcntr-private-egress-a"
@@ -157,6 +166,7 @@ resource "aws_subnet" "sbcntr-private-egress-a" {
 resource "aws_subnet" "sbcntr-private-egress-c" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.249.0/24"
+  availability_zone = "ap-northeast-1c"
 
   tags = {
     Name = "sbcntr-private-egress-c"
