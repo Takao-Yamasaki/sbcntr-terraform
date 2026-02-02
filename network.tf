@@ -72,11 +72,12 @@ resource "aws_route_table_association" "sbcntr-ingress-c" {
 }
 
 ## Ingressルートテーブルのデフォルトルート
-resource "aws_route_table_association" "sbcntr-ingress-default" {
-  gateway_id = aws_internet_gateway.main.id
-  route_table_id = aws_route_table.sbcntr-ingress.id
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route
+resource "aws_route" "sbcntr-ingress-default" {
+  route_table_id         = aws_route_table.sbcntr-ingress.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.main.id
 }
-
 
 ###############################
 # サブネット(アプリケーション用)
